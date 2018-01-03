@@ -2,19 +2,21 @@ import { ActionTypes } from './../ActionTypes/ActionTypes';
 import Immutable from 'immutable';
 
 const immCard = Immutable.Record({
-    type: '',
+    type: NaN,
     isFlippedUp: false,
 });
 
 const initialState = {
     cards: Immutable.List(),
     score: 0,
+    checkingCardIndex: NaN
 };
 
 function appReducer(state = initialState, action) {
     return {
         cards: cardsReducer(state.cards, action),
-        score: scoreReducer(state.score, action)
+        score: scoreReducer(state.score, action),
+        checkingCardIndex: checkingCardIndexReducer(state.checkingCardIndex, action)
     };
 }
 
@@ -46,7 +48,20 @@ function scoreReducer(state = 0, action) {
         case ActionTypes.CHANGE_SCORE:
             if(action.score)
                 return state + action.score;
-            return state
+            return state;
+        case ActionTypes.SET_CARDS:
+            return 0;
+        default: return state;
+    }
+}
+
+function checkingCardIndexReducer(state = NaN, action) {
+    switch(action.type) {
+        case ActionTypes.CHANGE_CHECKING_CARD:
+            if(action.cardIndex)
+                return action.cardIndex;
+            return state;
+        default: return state;
     }
 }
 

@@ -27,3 +27,10 @@ export function setCards(cards) {
         cards
     }
 }
+
+export function changeCheckingCard(cardIndex) {
+    return {
+        type: ActionTypes.CHANGE_CHECKING_CARD,
+        cardIndex
+    }
+}

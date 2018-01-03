@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { setCards } from "../../Actions/Actions";
-//import startup screen component
+//import startup screen component as StartScreen
 
 const getNewSetOfCards = (size) => {
     let cards = [];
@@ -24,3 +24,18 @@ const getNewSetOfCards = (size) => {
     return cards;
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        onStartNewGame: () => {
+            dispatch(setCards(getNewSetOfCards(ownProps.size)));
+        }
+    }
+};
+//also make the onStartNewGame open new router link with the game
+
+const StartContainer = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(StartScreen);
+
+export { StartContainer };
