@@ -1,6 +1,6 @@
 Memory game || SKB Kontur frontend internship entry test.
 
-Task formulation can be found through the link below:
+Task formulation can be accessed through the link below:
 https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/edit#
 
 ###### Libraries/instruments used to build the app:
