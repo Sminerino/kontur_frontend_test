@@ -14,6 +14,13 @@ export function flipCardDown(cardIndex) {
     }
 }
 
+export function confirmCard(cardIndex) {
+    return {
+        type: ActionTypes.CONFIRM_CARD,
+        cardIndex
+    }
+}
+
 export function changeScore(score) {
     return {
         type: ActionTypes.CHANGE_SCORE,

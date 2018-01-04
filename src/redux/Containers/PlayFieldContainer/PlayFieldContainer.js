@@ -1,8 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {setCards, changeScore, flipCardUp, flipCardDown, changeCheckingCard} from "../../Actions/Actions";
-//import { PlayField } from ...
-//import { Card } from ...
+import {
+    setCards,
+    changeScore,
+    flipCardUp,
+    flipCardDown,
+    changeCheckingCard,
+    confirmCard
+} from "../../Actions/Actions";
+import { PlayField } from './../../../ViewComponents/PlayField/PlayField';
+import { Card } from "../../../ViewComponents/PlayField/Card/Card";
+import { CardsTypes } from './../../../res/Cards/CardsTypes';
+
+const imgPath = require.context('./../../../res/CardsImages');
+
 
 class PlayFieldContainer extends React.Component {
 
@@ -17,11 +28,14 @@ class PlayFieldContainer extends React.Component {
         return(
             <PlayField
                 onStartNewGame={this.handleStartNewGame}
+                score={this.props.score}
             >
-                {this.props.cards.map(card =>
+                {this.props.cards.map((card,index) =>
                     <Card
                         {...card}
                         onCardFlip={this.handleCardFlip}
+                        key={index}
+
                     />
                 )}
             </PlayField>
@@ -39,21 +53,22 @@ class PlayFieldContainer extends React.Component {
                     ===
                     this.props.cards[this.props.checkingCardIndex].type
                 )
-                    this.handleRightGuess();
+                    this.handleRightGuess(cardIndex);
                 else this.handleWrongGuess(cardIndex);
             }
         }
     };
 
-    handleRightGuess() {
+    handleRightGuess(cardIndex) {
         this.addScore();
+        this.props.onConfirmCard(cardIndex);
+        this.props.onConfirmCard(this.props.checkingCardIndex);
         this.props.onChangeCheckingCard(NaN);
     }
 
     handleWrongGuess(cardIndex) {
         this.reduceScore();
         this.props.onChangeCheckingCard(NaN);
-        this.reduceScore();
         this.setState({
             checkTimeout: true
         },() => {
@@ -68,8 +83,8 @@ class PlayFieldContainer extends React.Component {
         });
     }
 
-    handleStartNewGame = () => {
-        this.props.onStartNewGame() //yet to make custom size
+    handleStartNewGame = (size) => {
+        this.props.onStartNewGame(size)
     };
 
     addScore() {
@@ -125,22 +140,24 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onStartNewGame: () => {
-            dispatch(setCards(getNewSetOfCards(ownProps.size)));
+        onStartNewGame: (size) => {
+            dispatch(setCards(getNewSetOfCards(size)));
         },
         onChangeScore: (delta) => {
-            dispatch(changeScore(delta))
+            dispatch(changeScore(delta));
         },
         onFlipCardUp: (cardIndex) => {
-            dispatch(flipCardUp(cardIndex))
+            dispatch(flipCardUp(cardIndex));
         },
         onFlipCardDown: (cardIndex) => {
-            dispatch(flipCardDown(cardIndex))
+            dispatch(flipCardDown(cardIndex));
         },
         onChangeCheckingCard: (cardIndex) => {
-            dispatch(changeCheckingCard(cardIndex))
+            dispatch(changeCheckingCard(cardIndex));
+        },
+        onConfirmCard: (cardIndex) => {
+            dispatch(confirmCard(cardIndex));
         }
-
     }
 };
 
