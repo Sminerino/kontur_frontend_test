@@ -7,7 +7,9 @@ class App extends Component {
   render() {
     return (
       <div>
-        <PlayFieldContainer />
+        <PlayFieldContainer
+            size={5}
+        />
       </div>
     );
   }

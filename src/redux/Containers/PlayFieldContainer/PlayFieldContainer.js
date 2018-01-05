@@ -20,28 +20,36 @@ class PlayFieldContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            gameLoading: true,
             checkTimeout: false
         }
     }
 
-    render() {
-        console.log(this.props.checkingCardIndex);
-        return(
-            <PlayField
-                onStartNewGame={this.handleStartNewGame}
-                score={this.props.score}
-            >
-                {this.props.cards.map((card,index) =>
-                    <Card
-                        {...card}
-                        index={index}
-                        onCardClick={this.handleCardClick}
-                        key={index}
+    componentDidMount() {
+        this.props.onStartNewGame();
+        this.setState({gameLoading: false});
+    }
 
-                    />
-                )}
-            </PlayField>
-        )
+    render() {
+        if(!this.state.gameLoading)
+            return(
+                <PlayField
+                    onStartNewGame={this.handleStartNewGame}
+                    score={this.props.score}
+                >
+                    {this.props.cards.map((card,index) =>
+                        <Card
+                            {...card}
+                            index={index}
+                            onCardClick={this.handleCardClick}
+                            key={index}
+
+                        />
+                    )}
+                </PlayField>
+            );
+        else return <div>Loading</div>
+        //(<LoadingScreen />)
     }
 
     handleCardClick = (cardIndex) => {
@@ -69,7 +77,6 @@ class PlayFieldContainer extends React.Component {
     }
 
     handleWrongGuess(cardIndex) {
-        this.props.onChangeCheckingCard(-1);
         this.reduceScore();
         this.setState({
             checkTimeout: true
@@ -77,12 +84,11 @@ class PlayFieldContainer extends React.Component {
             setTimeout(() => {
                 this.props.onFlipCardDown(cardIndex);
                 this.props.onFlipCardDown(this.props.checkingCardIndex);
+                this.props.onChangeCheckingCard(-1);
+                this.setState({
+                    checkTimeout: false
+                });
             }, 3000);
-
-            this.setState({
-                checkTimeout: false
-            });
-
         });
     }
 
@@ -143,8 +149,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onStartNewGame: (size) => {
-            dispatch(setCards(getNewSetOfCards(size)));
+        onStartNewGame: () => { //change to ownprops and start game on component mount
+            dispatch(setCards(getNewSetOfCards(ownProps.size)));
         },
         onChangeScore: (delta) => {
             dispatch(changeScore(delta));

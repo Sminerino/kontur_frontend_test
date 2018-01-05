@@ -8,9 +8,6 @@ const PlayField = (props) =>
         <div className='cards-container'>
             {props.children}
         </div>
-        <div onClick={() => props.onStartNewGame(3)}>
-            123
-        </div>
     </div>
 ;
 
