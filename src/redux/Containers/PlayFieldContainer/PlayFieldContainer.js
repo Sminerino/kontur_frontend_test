@@ -25,6 +25,7 @@ class PlayFieldContainer extends React.Component {
     }
 
     render() {
+        console.log(this.props.checkingCardIndex);
         return(
             <PlayField
                 onStartNewGame={this.handleStartNewGame}
@@ -33,7 +34,8 @@ class PlayFieldContainer extends React.Component {
                 {this.props.cards.map((card,index) =>
                     <Card
                         {...card}
-                        onCardFlip={this.handleCardFlip}
+                        index={index}
+                        onCardClick={this.handleCardClick}
                         key={index}
 
                     />
@@ -42,10 +44,10 @@ class PlayFieldContainer extends React.Component {
         )
     }
 
-    handleCardFlip = (cardIndex) => {
+    handleCardClick = (cardIndex) => {
         if(!this.state.checkTimeout) {
             this.props.onFlipCardUp(cardIndex);
-            if (!this.props.checkingCardIndex) {
+            if (this.props.checkingCardIndex < 0) {
                 this.props.onChangeCheckingCard(cardIndex);
             } else {
                 if (
@@ -60,15 +62,15 @@ class PlayFieldContainer extends React.Component {
     };
 
     handleRightGuess(cardIndex) {
-        this.addScore();
         this.props.onConfirmCard(cardIndex);
         this.props.onConfirmCard(this.props.checkingCardIndex);
-        this.props.onChangeCheckingCard(NaN);
+        this.addScore();
+        this.props.onChangeCheckingCard(-1);
     }
 
     handleWrongGuess(cardIndex) {
+        this.props.onChangeCheckingCard(-1);
         this.reduceScore();
-        this.props.onChangeCheckingCard(NaN);
         this.setState({
             checkTimeout: true
         },() => {
@@ -79,7 +81,8 @@ class PlayFieldContainer extends React.Component {
 
             this.setState({
                 checkTimeout: false
-            })
+            });
+
         });
     }
 
@@ -89,21 +92,21 @@ class PlayFieldContainer extends React.Component {
 
     addScore() {
         this.props.onChangeScore(
-            (this.props.cards.length / 2 - this.getOpenPairsCount()) * 42
+            (this.props.cards.length / 2 - this.getConfirmedPairsCount()) * 42
         );
     }
     reduceScore() {
         this.props.onChangeScore(
-            (this.getOpenPairsCount() * 42)
+            (-this.getConfirmedPairsCount() * 42)
         );
     }
-    getOpenPairsCount() {
-        let cardsOpen = 0;
+    getConfirmedPairsCount() {
+        let cardsConfirmed = 0;
         for(let i = 0; i < this.props.cards.length; i++) {
-            if(this.props.cards[i].isFlippedUp)
-                cardsOpen++;
+            if(this.props.cards[i].isConfirmed)
+                cardsConfirmed++;
         }
-        return cardsOpen / 2;
+        return cardsConfirmed / 2;
     }
 
 }

@@ -4,13 +4,13 @@ import Immutable from 'immutable';
 const immCard = Immutable.Record({
     type: NaN,
     isFlippedUp: false,
-    confirmed: false
+    isConfirmed: false
 });
 
 const initialState = {
     cards: Immutable.List(),
     score: 0,
-    checkingCardIndex: NaN
+    checkingCardIndex: -1
 };
 
 function appReducer(state = initialState, action) {
@@ -24,16 +24,16 @@ function appReducer(state = initialState, action) {
 function cardsReducer(state = Immutable.List(), action) {
     switch (action.type) {
         case ActionTypes.FLIP_CARD_UP:
-            if(action.cardIndex)
+            if(action.cardIndex >= 0)
                 return state.setIn([action.cardIndex, 'isFlippedUp'], true);
             return state;
         case ActionTypes.FLIP_CARD_DOWN:
-            if(action.cardIndex)
+            if(action.cardIndex >= 0)
                 return state.setIn([action.cardIndex, 'isFlippedUp'], false);
             return state;
         case ActionTypes.CONFIRM_CARD:
-            if(action.cardIndex)
-                return state.setIn([action.cardIndex, 'confirmed'], true);
+            if(action.cardIndex >= 0)
+                return state.setIn([action.cardIndex, 'isConfirmed'], true);
             return state;
         case ActionTypes.SET_CARDS:
             if(action.cards) {
@@ -60,10 +60,10 @@ function scoreReducer(state = 0, action) {
     }
 }
 
-function checkingCardIndexReducer(state = NaN, action) {
+function checkingCardIndexReducer(state = -1, action) {
     switch(action.type) {
         case ActionTypes.CHANGE_CHECKING_CARD:
-            if(action.cardIndex)
+            if(action.cardIndex >= 0)
                 return action.cardIndex;
             return state;
         default: return state;
