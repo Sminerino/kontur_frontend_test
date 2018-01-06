@@ -11,7 +11,7 @@ https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/
 5. (react-router should be here, haven't gotten to it yet)
 6. Immutable.js
 
-###### Notes:
+###### Score algorithm:
 Score to add/subtract is calculated for the state before the cards flip.
 I.e.:
 
