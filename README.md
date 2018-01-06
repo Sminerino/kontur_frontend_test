@@ -24,4 +24,4 @@ user opens two cards and it's a match; then, the score will be: 0 + 42 * 5
 where 0 is initial score, 42 - score multiplier, and 5 - number of flipped down pairs
 not 4, cause it's calculated before the pair is flipped
 
-same with unsuccessful guess.  
+same with an unsuccessful guess.
