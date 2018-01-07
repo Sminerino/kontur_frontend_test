@@ -68,7 +68,9 @@ function scoreReducer(state = 0, action) {
 function checkingCardIndexReducer(state = -1, action) {
     switch(action.type) {
         case ActionTypes.CHANGE_CHECKING_CARD:
-                return action.cardIndex;
+            return action.cardIndex;
+        case ActionTypes.SET_CARDS:
+            return -1;
         default: return state;
     }
 }

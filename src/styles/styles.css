@@ -1,0 +1,80 @@
+body {
+    font-family: "Noto Sans CJK JP Bold";
+    background-color: #478242;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.play-field-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.play-field {
+    display: flex;
+    flex-flow: column;
+}
+
+.play-field__header {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-gap: 20px;
+}
+
+.play-field__score {
+    grid-column: 6 / 7;
+    display: flex;
+    justify-content: flex-end;
+    color: beige;
+}
+
+.play-field__restart-button-container {
+    grid-column: 1 / 2;
+    color: beige;
+}
+
+.play-field__restart-button {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    border-radius: 3px;
+    background-color: #3c803c;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.play-field__restart-button:hover {
+    background-color: #305d2e;
+}
+
+.play-field__cards-container {
+    margin-top: 20px;
+    display: grid;
+    grid-template: repeat(3, 200px) / repeat(6, 1fr);
+    grid-gap: 20px;
+}
+
+.card {
+
+}
+
+.card_down {
+
+}
+
+.card_up {
+
+}
+
+.card_confirmed {
+
+}
+
+.card__image {
+    height: 200px;
+    width: 144px;
+}

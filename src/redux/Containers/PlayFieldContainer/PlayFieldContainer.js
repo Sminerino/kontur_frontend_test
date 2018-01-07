@@ -22,17 +22,36 @@ class PlayFieldContainer extends React.Component {
         super(props);
         this.state = {
             gameLoading: true, //mounting
-            initialTimeout: true, //5 seconds of flipped up cards time
-            checkTimeout: false //2 seconds to look at wrongly guessed cards
+            initialTimerInProgress: true, //5 seconds of flipped up cards time
+            checkTimerInProgress: false, //2 seconds to look at wrongly guessed cards
+
+            checkTimer: null,
+            initialTimer: null
         }
     }
 
     componentDidMount() {
-        this.props.onStartNewGame();
         this.setState({
             gameLoading: false,
-        }, () => this.startInitialTimer());
+        }, this.handleStartNewGame);
     }
+
+    handleStartNewGame = () => {
+        clearTimeout(this.state.initialTimer);
+        clearTimeout(this.state.checkTimer);
+        let initialTimer = setTimeout(() => {
+            this.props.onFlipAllDown();
+            this.setState({initialTimerInProgress: false});
+        }, 5000);
+        this.setState({
+            initialTimer,
+            initialTimerInProgress: true,
+            checkTimerInProgress: false
+
+        });
+        this.props.onStartNewGame();
+    };
+
 
     render() {
         if(!this.state.gameLoading)
@@ -47,11 +66,7 @@ class PlayFieldContainer extends React.Component {
                             index={index}
                             onCardClick={this.handleCardClick}
                             key={index}
-                            image={
-                                <img
-                                    src={imagesReq(`./${CardsTypes[card.type]}.png`, true)}
-                                />
-                            }
+                            image={imagesReq(`./${CardsTypes[card.type]}.png`, true)}
                         />
                     )}
                 </PlayField>
@@ -60,16 +75,9 @@ class PlayFieldContainer extends React.Component {
         //(<LoadingScreen />)
     }
 
-    startInitialTimer() {
-        setTimeout(() => {
-            this.props.onFlipAllDown();
-            this.setState({initialTimeout: false});
-        },5000)
-    }
-
     handleCardClick = (cardIndex) => {
-        if(!this.state.initialTimeout)
-        if(!this.state.checkTimeout) {
+        if(!this.state.initialTimerInProgress)
+        if(!this.state.checkTimerInProgress) {
             this.props.onFlipCardUp(cardIndex);
             if (this.props.checkingCardIndex < 0) {
                 this.props.onChangeCheckingCard(cardIndex);
@@ -93,24 +101,24 @@ class PlayFieldContainer extends React.Component {
     }
 
     handleWrongGuess(cardIndex) {
+        let checkTimer = setTimeout(() => {
+            this.props.onFlipCardDown(cardIndex);
+            this.props.onFlipCardDown(this.props.checkingCardIndex);
+            this.props.onChangeCheckingCard(-1);
+            this.setState({
+                checkTimerInProgress: false
+            });
+        }, 2000);
+
         this.reduceScore();
+
         this.setState({
-            checkTimeout: true
-        },() => {
-            setTimeout(() => {
-                this.props.onFlipCardDown(cardIndex);
-                this.props.onFlipCardDown(this.props.checkingCardIndex);
-                this.props.onChangeCheckingCard(-1);
-                this.setState({
-                    checkTimeout: false
-                });
-            }, 2000);
+            checkTimer,
+            checkTimerInProgress: true
         });
     }
 
-    handleStartNewGame = (size) => {
-        this.props.onStartNewGame(size)
-    };
+
 
     addScore() {
         this.props.onChangeScore(

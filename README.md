@@ -8,8 +8,7 @@ https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/
 2. create-react-app
 3. Redux
 4. react-redux
-5. (react-router should be here, haven't gotten to it yet)
-6. Immutable.js
+5. Immutable.js
 
 ###### Score algorithm:
 Score to add/subtract is calculated for the state before the cards flip.
@@ -28,4 +27,7 @@ same with an unsuccessful guess.
 
 ###### Todo:
 1. ~~cards should be open for the first 5 seconds.~~
-2. styling
+2. ~~styling~~
+3. start screen
+4. end screen
+5. ~~restart button~~

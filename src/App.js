@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './styles/styles.css';
 import PlayFieldContainer from './redux/Containers/PlayFieldContainer/PlayFieldContainer';
 
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className='play-field-container'>
         <PlayFieldContainer
-            size={5}
+            size={9}
         />
       </div>
     );
