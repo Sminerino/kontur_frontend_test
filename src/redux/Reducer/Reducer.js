@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 
 const immCard = Immutable.Record({
     type: NaN,
-    isFlippedUp: false,
+    isFlippedUp: true,
     isConfirmed: false
 });
 
@@ -35,6 +35,11 @@ function cardsReducer(state = Immutable.List(), action) {
             if(action.cardIndex >= 0)
                 return state.setIn([action.cardIndex, 'isConfirmed'], true);
             return state;
+        case ActionTypes.FLIP_ALL_DOWN:
+            return state.withMutations(_state => {
+                    _state.forEach((entry, index) => _state.setIn([index,'isFlippedUp'], false))
+                }
+            );
         case ActionTypes.SET_CARDS:
             if(action.cards) {
                 let cardsArray = action.cards.map(_card => new immCard({

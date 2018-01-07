@@ -5,6 +5,7 @@ import {
     changeScore,
     flipCardUp,
     flipCardDown,
+    flipAllDown,
     changeCheckingCard,
     confirmCard
 } from "../../Actions/Actions";
@@ -20,14 +21,17 @@ class PlayFieldContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameLoading: true,
-            checkTimeout: false
+            gameLoading: true, //mounting
+            initialTimeout: true, //5 seconds of flipped up cards time
+            checkTimeout: false //2 seconds to look at wrongly guessed cards
         }
     }
 
     componentDidMount() {
         this.props.onStartNewGame();
-        this.setState({gameLoading: false});
+        this.setState({
+            gameLoading: false,
+        }, () => this.startInitialTimer());
     }
 
     render() {
@@ -56,7 +60,15 @@ class PlayFieldContainer extends React.Component {
         //(<LoadingScreen />)
     }
 
+    startInitialTimer() {
+        setTimeout(() => {
+            this.props.onFlipAllDown();
+            this.setState({initialTimeout: false});
+        },5000)
+    }
+
     handleCardClick = (cardIndex) => {
+        if(!this.state.initialTimeout)
         if(!this.state.checkTimeout) {
             this.props.onFlipCardUp(cardIndex);
             if (this.props.checkingCardIndex < 0) {
@@ -92,7 +104,7 @@ class PlayFieldContainer extends React.Component {
                 this.setState({
                     checkTimeout: false
                 });
-            }, 3000);
+            }, 2000);
         });
     }
 
@@ -164,6 +176,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         },
         onFlipCardDown: (cardIndex) => {
             dispatch(flipCardDown(cardIndex));
+        },
+        onFlipAllDown: () => {
+            dispatch(flipAllDown());
         },
         onChangeCheckingCard: (cardIndex) => {
             dispatch(changeCheckingCard(cardIndex));

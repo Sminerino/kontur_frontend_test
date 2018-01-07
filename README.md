@@ -27,5 +27,5 @@ not 4, cause it's calculated before the pair is flipped
 same with an unsuccessful guess.
 
 ###### Todo:
-1. cards should be open for the first 5 seconds.
+1. ~~cards should be open for the first 5 seconds.~~
 2. styling

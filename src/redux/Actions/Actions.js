@@ -14,6 +14,12 @@ export function flipCardDown(cardIndex) {
     }
 }
 
+export function flipAllDown() {
+    return {
+        type: ActionTypes.FLIP_ALL_DOWN
+    }
+}
+
 export function confirmCard(cardIndex) {
     return {
         type: ActionTypes.CONFIRM_CARD,
