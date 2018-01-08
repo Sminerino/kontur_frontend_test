@@ -5,9 +5,11 @@ import {
     changeScore,
     flipCardUp,
     flipCardDown,
-    flipAllDown,
     changeCheckingCard,
-    confirmCard
+    confirmCard,
+    stopInitialTimer,
+    startCheckTimer,
+    stopCheckTimer
 } from "../../Actions/Actions";
 import { PlayField } from './../../../ViewComponents/PlayField/PlayField';
 import { Card } from "../../../ViewComponents/PlayField/Card/Card";
@@ -22,9 +24,6 @@ class PlayFieldContainer extends React.Component {
         super(props);
         this.state = {
             gameLoading: true, //mounting
-            initialTimerInProgress: true, //5 seconds of flipped up cards time
-            checkTimerInProgress: false, //2 seconds to look at wrongly guessed cards
-
             checkTimer: null,
             initialTimer: null
         }
@@ -39,16 +38,14 @@ class PlayFieldContainer extends React.Component {
     handleStartNewGame = () => {
         clearTimeout(this.state.initialTimer);
         clearTimeout(this.state.checkTimer);
+
         let initialTimer = setTimeout(() => {
-            this.props.onFlipAllDown();
-            this.setState({initialTimerInProgress: false});
+            this.props.onStopInitialTimer();
         }, 5000);
         this.setState({
-            initialTimer,
-            initialTimerInProgress: true,
-            checkTimerInProgress: false
-
+            initialTimer
         });
+
         this.props.onStartNewGame();
     };
 
@@ -72,12 +69,11 @@ class PlayFieldContainer extends React.Component {
                 </PlayField>
             );
         else return <div>Loading</div>
-        //(<LoadingScreen />)
     }
 
     handleCardClick = (cardIndex) => {
-        if(!this.state.initialTimerInProgress)
-        if(!this.state.checkTimerInProgress) {
+        if(!this.props.initialTimerInProgress)
+        if(!this.props.checkTimerInProgress) {
             this.props.onFlipCardUp(cardIndex);
             if (this.props.checkingCardIndex < 0) {
                 this.props.onChangeCheckingCard(cardIndex);
@@ -94,28 +90,22 @@ class PlayFieldContainer extends React.Component {
     };
 
     handleRightGuess(cardIndex) {
-        this.props.onConfirmCard(cardIndex);
-        this.props.onConfirmCard(this.props.checkingCardIndex);
+        this.props.onConfirmPair([cardIndex, this.props.checkingCardIndex]);
         this.addScore();
-        this.props.onChangeCheckingCard(-1);
     }
 
     handleWrongGuess(cardIndex) {
         let checkTimer = setTimeout(() => {
             this.props.onFlipCardDown(cardIndex);
             this.props.onFlipCardDown(this.props.checkingCardIndex);
-            this.props.onChangeCheckingCard(-1);
-            this.setState({
-                checkTimerInProgress: false
-            });
+            this.props.onStopCheckTimer()
         }, 2000);
 
         this.reduceScore();
 
         this.setState({
             checkTimer,
-            checkTimerInProgress: true
-        });
+        }, this.props.onStartCheckTimer);
     }
 
 
@@ -125,11 +115,13 @@ class PlayFieldContainer extends React.Component {
             (this.props.cards.length / 2 - this.getConfirmedPairsCount()) * 42
         );
     }
+
     reduceScore() {
         this.props.onChangeScore(
             (-this.getConfirmedPairsCount() * 42)
         );
     }
+
     getConfirmedPairsCount() {
         let cardsConfirmed = 0;
         for(let i = 0; i < this.props.cards.length; i++) {
@@ -167,7 +159,9 @@ const mapStateToProps = (state, ownProps) => {
     return {
         cards: state.cards.toJS(),
         score: state.score,
-        checkingCardIndex: state.checkingCardIndex
+        checkingCardIndex: state.checkingCardIndex,
+        initialTimerInProgress: state.initialTimerInProgress,
+        checkTimerInProgress: state.checkTimerInProgress
     }
 };
 
@@ -185,14 +179,20 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         onFlipCardDown: (cardIndex) => {
             dispatch(flipCardDown(cardIndex));
         },
-        onFlipAllDown: () => {
-            dispatch(flipAllDown());
-        },
         onChangeCheckingCard: (cardIndex) => {
             dispatch(changeCheckingCard(cardIndex));
         },
-        onConfirmCard: (cardIndex) => {
-            dispatch(confirmCard(cardIndex));
+        onConfirmPair: (cards) => {
+            dispatch(confirmCard(cards));
+        },
+        onStopInitialTimer: () => {
+            dispatch(stopInitialTimer());
+        },
+        onStartCheckTimer: (wrongCardIndex) => {
+            dispatch(startCheckTimer(wrongCardIndex));
+        },
+        onStopCheckTimer: () => {
+            dispatch(stopCheckTimer());
         }
     }
 };

@@ -14,16 +14,10 @@ export function flipCardDown(cardIndex) {
     }
 }
 
-export function flipAllDown() {
+export function confirmCard(cards) {
     return {
-        type: ActionTypes.FLIP_ALL_DOWN
-    }
-}
-
-export function confirmCard(cardIndex) {
-    return {
-        type: ActionTypes.CONFIRM_CARD,
-        cardIndex
+        type: ActionTypes.CONFIRM_PAIR,
+        cards
     }
 }
 
@@ -36,7 +30,7 @@ export function changeScore(score) {
 
 export function setCards(cards) {
     return {
-        type: ActionTypes.SET_CARDS,
+        type: ActionTypes.START_NEW_GAME,
         cards
     }
 }
@@ -45,5 +39,24 @@ export function changeCheckingCard(cardIndex) {
     return {
         type: ActionTypes.CHANGE_CHECKING_CARD,
         cardIndex
+    }
+}
+
+export function stopInitialTimer() {
+    return {
+        type: ActionTypes.INITIAL_TIMER_END
+    }
+}
+
+export function startCheckTimer(wrongCardIndex) {
+    return {
+        type: ActionTypes.CHECK_TIMER_START,
+        wrongCardIndex
+    }
+}
+
+export function stopCheckTimer() {
+    return {
+        type: ActionTypes.CHECK_TIMER_END
     }
 }
