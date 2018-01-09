@@ -12,6 +12,7 @@ import {
     stopCheckTimer
 } from "../../Actions/Actions";
 import { PlayField } from './../../../ViewComponents/PlayField/PlayField';
+import { EndPage } from "../../../ViewComponents/EndPage/EndPage";
 import { Card } from "../../../ViewComponents/PlayField/Card/Card";
 import { CardsTypes } from './../../../res/Cards/CardsTypes';
 
@@ -51,24 +52,27 @@ class PlayFieldContainer extends React.Component {
 
 
     render() {
-        if(!this.state.gameLoading)
-            return(
-                <PlayField
-                    onStartNewGame={this.handleStartNewGame}
-                    score={this.props.score}
-                >
-                    {this.props.cards.map((card,index) =>
-                        <Card
-                            {...card}
-                            index={index}
-                            onCardClick={this.handleCardClick}
-                            key={index}
-                            image={imagesReq(`./${CardsTypes[card.type]}.png`, true)}
-                        />
-                    )}
-                </PlayField>
-            );
-        else return <div>Loading</div>
+        if(!this.state.gameLoading) {
+            if(this.getConfirmedCardsCount() < this.props.cards.length)
+                return(
+                    <PlayField
+                        onStartNewGame={this.handleStartNewGame}
+                        score={this.props.score}
+                    >
+                        {this.props.cards.map((card,index) =>
+                            <Card
+                                {...card}
+                                index={index}
+                                onCardClick={this.handleCardClick}
+                                key={index}
+                                image={imagesReq(`./${CardsTypes[card.type]}.png`, true)}
+                            />
+                        )}
+                    </PlayField>
+                );
+            return <EndPage score={this.props.score} onRestart={this.handleStartNewGame}/>
+        }
+        return <div className='loading-indicator'>Loading</div>
     }
 
     handleCardClick = (cardIndex) => {
@@ -112,25 +116,29 @@ class PlayFieldContainer extends React.Component {
 
     addScore() {
         this.props.onChangeScore(
-            (this.props.cards.length / 2 - this.getConfirmedPairsCount()) * 42
+            (this.props.cards.length / 2 - this.getConfirmedCardsCount() / 2) * 42
         );
     }
 
     reduceScore() {
         this.props.onChangeScore(
-            (-this.getConfirmedPairsCount() * 42)
+            (-this.getConfirmedCardsCount() / 2 * 42)
         );
     }
 
-    getConfirmedPairsCount() {
+    getConfirmedCardsCount() {
         let cardsConfirmed = 0;
         for(let i = 0; i < this.props.cards.length; i++) {
             if(this.props.cards[i].isConfirmed)
                 cardsConfirmed++;
         }
-        return cardsConfirmed / 2;
+        return cardsConfirmed;
     }
 
+    componentWillUnmount() {
+        clearTimeout(this.state.initialTimer);
+        clearTimeout(this.state.checkTimer);
+    }
 }
 
 const getNewSetOfCards = (size) => {
@@ -167,8 +175,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
-        onStartNewGame: () => { //change to ownprops and start game on component mount
-            dispatch(setCards(getNewSetOfCards(ownProps.size)));
+        onStartNewGame: () => {
+            dispatch(setCards(getNewSetOfCards(ownProps.size || 9)));
         },
         onChangeScore: (delta) => {
             dispatch(changeScore(delta));
