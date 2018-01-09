@@ -40,3 +40,4 @@ same with an unsuccessful guess.
 4. ~~end screen~~
 5. ~~restart button~~
 6. testing
+7. icon and title
