@@ -37,17 +37,18 @@ body {
 }
 
 .restart-button {
+    color: #478242;
     display: flex;
     justify-content: center;
     padding: 5px;
     border-radius: 3px;
-    background-color: #3c803c;
+    background-color: beige;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
 
 .restart-button:hover {
-    background-color: #305d2e;
+    background-color: #b5b5a2;
 }
 
 .play-field__cards-container {
@@ -91,9 +92,10 @@ body {
 }
 
 .start-page__play-button {
+    color: #478242;
     margin-top: 10px;
     padding: 5px 20px;
-    background-color: #3c803c;
+    background-color: beige;
     font-size: larger;
     border-radius: 3px;
     transition: background-color 0.2s ease;
@@ -101,7 +103,7 @@ body {
 }
 
 .start-page__play-button:hover {
-    background-color: #305d2e;
+    background-color: #b5b5a2;
 }
 
 .end-screen-container {
