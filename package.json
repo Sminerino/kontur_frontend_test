@@ -1,6 +1,9 @@
 {
   "name": "kontur_frontend_test",
-  "version": "0.1.0",
+  "version": "0.6.9",
+  "engines": {
+    "node": "9.3.0"
+  },
   "private": true,
   "dependencies": {
     "immutable": "^3.8.2",

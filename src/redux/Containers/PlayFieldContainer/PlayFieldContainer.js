@@ -24,7 +24,7 @@ class PlayFieldContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameLoading: true, //mounting
+            gameLoading: true,
             checkTimer: null,
             initialTimer: null
         }

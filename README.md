@@ -1,7 +1,14 @@
 Memory game || SKB Kontur frontend internship entry test.
 
+Hosted app: https://www.memory-game-smn.herokuapp.com (kinda poor performance)
+
 Task formulation can be accessed through the link below:
 https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/edit#
+
+###### Installing:
+    npm i || yarn install
+###### Running:
+    npm run start || yarn start
 
 ###### Libraries/instruments used to build the app:
 1. React
