@@ -14,6 +14,7 @@ const EndPage = ({score, onRestart}) =>
         </div>
         <RestartButton
             onClick={onRestart}
+            data-tid='EndGame-retryGame'
         />
     </div>;
 
