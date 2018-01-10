@@ -19,11 +19,20 @@ const Card = (props) => {
         return (
             <div className='card card_up' data-tid='Card-flipped'>
                 <img
-                    src={props.image} className='card__image'
+                    src={props.image}
+                    className='card__image'
                     alt='Card'
                 />
             </div>
         );
-    return <div className='card card_up card_confirmed' />
+    return (
+        <div className='card card_confirmed'>
+            <img
+                src={props.image}
+                className='card__image'
+                alt='Card'
+            />
+        </div>
+    );
 };
 export { Card };

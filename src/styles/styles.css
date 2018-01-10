@@ -65,14 +65,16 @@ body {
 
 .card_down {
     cursor: pointer;
+    opacity: 1;
 }
 
 .card_up {
-
+    opacity: 1;
 }
 
 .card_confirmed {
-
+    opacity: 0;
+    transition: opacity 2s ease-out;
 }
 
 .card__image {
