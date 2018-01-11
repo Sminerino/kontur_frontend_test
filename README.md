@@ -34,11 +34,14 @@ not 4, cause it's calculated before the pair is flipped
 
 same with an unsuccessful guess.
 
+###### Notes:
+1.
+
 ###### Todo:
 1. ~~cards should be open for the first 5 seconds.~~
 2. ~~styling~~
 3. ~~start screen~~
 4. ~~end screen~~
 5. ~~restart button~~
-6. testing
-7. icon and title
+6. ~~testing~~ meh
+7. ~~icon and title~~
