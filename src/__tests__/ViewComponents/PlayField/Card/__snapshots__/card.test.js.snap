@@ -1,13 +1,40 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Card component is rendering 1`] = `
+exports[`Card component is passing snapshot test in all 3 of its states 1`] = `
 <div
   className="card card_confirmed"
 >
   <img
     alt="Card"
     className="card__image"
-    src={undefined}
+    src="image source"
+  />
+</div>
+`;
+
+exports[`Card component is passing snapshot test in all 3 of its states 2`] = `
+<div
+  className="card card_up"
+  data-tid="Card-flipped"
+>
+  <img
+    alt="Card"
+    className="card__image"
+    src="image source"
+  />
+</div>
+`;
+
+exports[`Card component is passing snapshot test in all 3 of its states 3`] = `
+<div
+  className="card card_down"
+  data-tid="Card"
+  onClick={[Function]}
+>
+  <img
+    alt="Card back"
+    className="card__image"
+    src="cardback.png"
   />
 </div>
 `;

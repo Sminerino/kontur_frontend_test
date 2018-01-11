@@ -46,3 +46,4 @@ same with an unsuccessful guess.
 5. ~~restart button~~
 6. ~~testing~~ meh
 7. ~~icon and title~~
+8. add enzyme
