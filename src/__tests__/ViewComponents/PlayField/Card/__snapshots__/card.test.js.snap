@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card component is rendering 1`] = `
+<div
+  className="card card_confirmed"
+>
+  <img
+    alt="Card"
+    className="card__image"
+    src={undefined}
+  />
+</div>
+`;
