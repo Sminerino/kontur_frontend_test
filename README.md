@@ -35,7 +35,8 @@ not 4, cause it's calculated before the pair is flipped
 same with an unsuccessful guess.
 
 ###### Notes:
-1.
+1. time for which wrongly guessed cards are shown: 2000ms
+2. initial time for card remembering: 5000ms
 
 ###### Todo:
 1. ~~cards should be open for the first 5 seconds.~~
