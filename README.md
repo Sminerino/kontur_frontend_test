@@ -44,6 +44,6 @@ same with an unsuccessful guess.
 3. ~~start screen~~
 4. ~~end screen~~
 5. ~~restart button~~
-6. ~~testing~~ meh
+6. testing
 7. ~~icon and title~~
-8. add enzyme
+8. ~~add enzyme~~

@@ -1,7 +1,12 @@
+/**
+ * @jest-environment node
+ */
+
 import { Card } from "../../../../ViewComponents/PlayField/Card/Card";
 import React from 'react';
 import renderer from 'react-test-renderer';
 import ShallowRenderer from 'react-test-renderer/shallow';
+import { shallow } from 'enzyme';
 
 const ShRenderer = new ShallowRenderer();
 
@@ -67,7 +72,10 @@ test('Card component returns div of needed class when given props', () => {
     );
     expect(cardUpConfirmed.props.className).toBe('card card_confirmed');
 
-    const cardDownConfirmed = ShRenderer.render( //though there shouldn't be such a combination of props
+    //if this combination of props isFlippedUp, isConfirmed is present somewhere in the state,
+    //the program is not working right
+    //nevertheless it is included in the test
+    const cardDownConfirmed = ShRenderer.render(
         <Card
             isFlippedUp={true}
             isConfirmed={true}
@@ -104,7 +112,10 @@ test('Card component renders needed image when given props', () => {
     );
     expect(cardUp.toJSON().children[0].props.src).toBe('required image');
 
-    const cardDownConfirmed = renderer.create( //though there shouldn't be such a combination of props
+    //if this combination of props isFlippedUp, isConfirmed is present somewhere in the state,
+    //the program is not working right
+    //nevertheless it is included in the test
+    const cardDownConfirmed = renderer.create(
         <Card
             isFlippedUp={false}
             isConfirmed={true}
@@ -114,8 +125,47 @@ test('Card component renders needed image when given props', () => {
 
 });
 
-/*
 test('Only flipped down card is responsive to clicks', () => {
+    let numberOfRegisteredCardClicks = 0;
+    const cardDown = shallow(
+        <Card
+            isFlippedUp={false}
+            isConfirmed={false}
+            onCardClick={() => numberOfRegisteredCardClicks++}
+        />
+    );
+    const cardUp = shallow(
+        <Card
+            isFlippedUp={true}
+            isConfirmed={false}
+            image='required image'
+            onCardClick={() => numberOfRegisteredCardClicks++}
+        />
+    );
+    const cardUpConfirmed = shallow(
+        <Card
+            isFlippedUp={true}
+            isConfirmed={true}
+            image='required image'
+            onCardClick={() => numberOfRegisteredCardClicks++}
+        />
+    );
 
+    //if this combination of props isFlippedUp, isConfirmed is present somewhere in the state,
+    //the program is not working right
+    //nevertheless it is included in the test
+    const cardDownConfirmed = shallow(
+        <Card
+            isFlippedUp={false}
+            isConfirmed={true}
+            onCardClick={() => numberOfRegisteredCardClicks++}
+        />
+    );
 
-});*/
+    cardDown.find('div').simulate('click');
+    cardUp.find('div').simulate('click');
+    cardUpConfirmed.find('div').simulate('click');
+    cardDownConfirmed.find('div').simulate('click');
+
+    expect(numberOfRegisteredCardClicks).toEqual(2);
+});
