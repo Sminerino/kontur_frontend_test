@@ -16,21 +16,18 @@ import { EndPage } from "../../../ViewComponents/EndPage/EndPage";
 import { Card } from "../../../ViewComponents/PlayField/Card/Card";
 import { CardsTypes } from './../../../res/Cards/CardsTypes';
 
-class PlayFieldContainer extends React.Component {
+export class PlayFieldContainer extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            gameLoading: true,
             checkTimer: null,
             initialTimer: null
         }
     }
 
     componentDidMount() {
-        this.setState({
-            gameLoading: false,
-        }, this.handleStartNewGame);
+        this.handleStartNewGame();
     }
 
     handleStartNewGame = () => {
@@ -38,38 +35,45 @@ class PlayFieldContainer extends React.Component {
         clearTimeout(this.state.checkTimer);
 
         let initialTimer = setTimeout(() => {
+            this.props.onStopInitialTimer &&
             this.props.onStopInitialTimer();
         }, 5000);
         this.setState({
             initialTimer
         });
 
+        this.props.onStartNewGame &&
         this.props.onStartNewGame();
     };
 
 
     render() {
-        if(!this.state.gameLoading) {
-            if(this.getConfirmedCardsCount() < this.props.cards.length)
-                return(
-                    <PlayField
-                        onStartNewGame={this.handleStartNewGame}
-                        score={this.props.score}
-                    >
-                        {this.props.cards.map((card,index) =>
-                            <Card
-                                {...card}
-                                index={index}
-                                onCardClick={this.handleCardClick}
-                                key={index}
-                                image={CardsTypes[card.type]}
-                            />
-                        )}
-                    </PlayField>
-                );
-            return <EndPage score={this.props.score} onRestart={this.handleStartNewGame}/>
-        }
-        return <div className='loading-indicator'>Loading</div>
+        if(
+            this.props.cards &&
+            this.getConfirmedCardsCount() < this.props.cards.length
+        )
+            return (
+                <PlayField
+                    onStartNewGame={this.handleStartNewGame}
+                    score={this.props.score || 0}
+                >
+                    {this.props.cards.map((card,index) =>
+                        <Card
+                            {...card}
+                            index={index}
+                            onCardClick={this.handleCardClick}
+                            key={index}
+                            image={CardsTypes[card.type]}
+                        />
+                    )}
+                </PlayField>
+            );
+        return (
+            <EndPage
+                score={this.props.score || 0}
+                onRestart={this.handleStartNewGame}
+            />
+            );
     }
 
     handleCardClick = (cardIndex) => {
@@ -125,10 +129,11 @@ class PlayFieldContainer extends React.Component {
 
     getConfirmedCardsCount() {
         let cardsConfirmed = 0;
-        for(let i = 0; i < this.props.cards.length; i++) {
-            if(this.props.cards[i].isConfirmed)
-                cardsConfirmed++;
-        }
+        if(this.props.cards)
+            for(let i = 0; i < this.props.cards.length; i++) {
+                if(this.props.cards[i].isConfirmed)
+                    cardsConfirmed++;
+            }
         return cardsConfirmed;
     }
 
@@ -138,7 +143,7 @@ class PlayFieldContainer extends React.Component {
     }
 }
 
-const getNewSetOfCards = (size) => {
+export const getNewSetOfCards = (size) => {
     let cards = [];
 
     while(cards.length < size) {
@@ -162,7 +167,7 @@ const getNewSetOfCards = (size) => {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        cards: state.cards.toJS(),
+        cards: state.cards.toJS() || [],
         score: state.score,
         checkingCardIndex: state.checkingCardIndex,
         initialTimerInProgress: state.initialTimerInProgress,

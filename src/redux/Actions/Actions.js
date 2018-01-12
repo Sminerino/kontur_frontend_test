@@ -29,6 +29,7 @@ export function changeScore(score) {
 }
 
 export function startNewGame(cards) {
+
     return {
         type: ActionTypes.START_NEW_GAME,
         cards
