@@ -1,6 +1,6 @@
 Memory game || SKB Kontur frontend internship entry test.
 
-Hosted app: memory-game-smn.herokuapp.com || memory-game-smn.surge.sh
+Hosted app: memory-game-smn.surge.sh
 
 
 Task formulation can be accessed through the link below:
