@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {
-    setCards,
+    startNewGame,
     changeScore,
     flipCardUp,
     flipCardDown,
@@ -176,7 +176,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onStartNewGame: () => {
-            dispatch(setCards(getNewSetOfCards(ownProps.size || 9)));
+            dispatch(startNewGame(getNewSetOfCards(ownProps.size || 9)));
         },
         onChangeScore: (delta) => {
             dispatch(changeScore(delta));
