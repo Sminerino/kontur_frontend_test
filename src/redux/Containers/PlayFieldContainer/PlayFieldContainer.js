@@ -16,9 +16,6 @@ import { EndPage } from "../../../ViewComponents/EndPage/EndPage";
 import { Card } from "../../../ViewComponents/PlayField/Card/Card";
 import { CardsTypes } from './../../../res/Cards/CardsTypes';
 
-const imagesReq = require.context('./../../../res/Cards', false);
-
-
 class PlayFieldContainer extends React.Component {
 
     constructor(props) {
@@ -65,7 +62,7 @@ class PlayFieldContainer extends React.Component {
                                 index={index}
                                 onCardClick={this.handleCardClick}
                                 key={index}
-                                image={imagesReq(`./${CardsTypes[card.type]}.png`, true)}
+                                image={CardsTypes[card.type]}
                             />
                         )}
                     </PlayField>
