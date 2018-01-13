@@ -43,7 +43,7 @@ same with an unsuccessful guess.
 3. tests mostly check components and business logic, not much of redux is tested
 4. score changing algorithm was also tested manually through adding a mock of random card generation
 and shuffling function; and then checking if the algorithm works as intended;
-5. the biggest amount of points one can get is 1890 (42*9 + 42*8 + ... +42*1)
+5. the biggest amount of points one can get is 1890 (42 \* 9 + 42 \* 8 + ... +42 \* 1)
 6. there can be negative total score
 
 ###### Todo:
