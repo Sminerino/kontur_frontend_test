@@ -4127,6 +4127,12 @@ jest@20.0.4:
   dependencies:
     jest-cli "^20.0.4"
 
+jest@^22.0.6:
+  version "22.0.6"
+  resolved "https://registry.yarnpkg.com/jest/-/jest-22.0.6.tgz#0d0d3bdc402c43cf5a3eae58a55cff6da8b6820f"
+  dependencies:
+    jest-cli "^22.0.6"
+
 js-base64@^2.1.9:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.4.0.tgz#9e566fee624751a1d720c966cd6226d29d4025aa"
@@ -4153,7 +4159,11 @@ jsbn@~0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/jsbn/-/jsbn-0.1.1.tgz#a5e654c2e5a2deb5f201d96cefbca80c0ef2f513"
 
-jsdom@^11.5.1:
+jsdom-global@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/jsdom-global/-/jsdom-global-3.0.2.tgz#6bd299c13b0c4626b2da2c0393cd4385d606acb9"
+
+jsdom@11.5.1, jsdom@^11.5.1:
   version "11.5.1"
   resolved "https://registry.yarnpkg.com/jsdom/-/jsdom-11.5.1.tgz#5df753b8d0bca20142ce21f4f6c039f99a992929"
   dependencies:

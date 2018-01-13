@@ -117,13 +117,14 @@ export class PlayFieldContainer extends React.Component {
 
     addScore() {
         this.props.onChangeScore(
-            (this.props.cards.length / 2 - this.getConfirmedCardsCount() / 2) * 42
+            (this.props.cards.length / 2 -
+                Math.floor(this.getConfirmedCardsCount() / 2)) * 42
         );
     }
 
     reduceScore() {
         this.props.onChangeScore(
-            (-this.getConfirmedCardsCount() / 2 * 42)
+            (-Math.floor(this.getConfirmedCardsCount() / 2) * 42)
         );
     }
 
@@ -165,7 +166,7 @@ export const getNewSetOfCards = (size) => {
     return cards;
 };
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
     return {
         cards: state.cards.toJS() || [],
         score: state.score,
@@ -175,7 +176,7 @@ const mapStateToProps = (state, ownProps) => {
     }
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+export const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         onStartNewGame: () => {
             dispatch(startNewGame(getNewSetOfCards(ownProps.size || 9)));

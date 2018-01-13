@@ -1,6 +1,7 @@
 /**
  * @jest-environment node
  */
+import 'jsdom-global/register';
 import React from 'react';
 import { shallow, mount } from 'enzyme';
 import { PlayFieldContainer } from '../../../../../redux/Containers/PlayFieldContainer/PlayFieldContainer';
@@ -103,3 +104,69 @@ test('Timers are reset with starting new game', () => {
     expect(clearTimeout).toHaveBeenCalledTimes(4); //initial 2 resets + 2 in handleStartNewGame method
 });
 
+test('PlayFieldContainer should correctly calculate ' +
+    'the score based on the number of confirmed cards passed to it', () => {
+    let cardMocks = [ //4 confirmed pairs and 2 not confirmed
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: false},
+        {isConfirmed: false},
+        {isConfirmed: false},
+        {isConfirmed: false}];
+    let scoreAfterChange = 0;
+    let playField = shallow(
+        <PlayFieldContainer
+            cards={cardMocks}
+            score={0}
+            checkingCardIndex={-1}
+            initialTimerInProgress={false}
+            checkTimerInProgress={false}
+            onStartNewGame={() => {}}
+            onChangeScore={(score) => {scoreAfterChange += score}}
+        /> );
+
+    playField.instance().addScore();
+    expect(scoreAfterChange).toEqual(42*2);
+    playField.instance().reduceScore();
+    expect(scoreAfterChange).toEqual(42*2 - 4*42);
+});
+
+test('PlayFieldContainer should correctly calculate' +
+    ' the score even if given odd number of confirmed cards (not every confirmed card' +
+    ' has a pair), in this case, these 2 cards count as not confirmed', () => {
+    let cardMocks = [ //7 confirmed cards and 5 not confirmed
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: true},
+        {isConfirmed: false},
+        {isConfirmed: false},
+        {isConfirmed: false},
+        {isConfirmed: false},
+        {isConfirmed: false}];
+    let scoreAfterChange = 0;
+    let playField = shallow(
+        <PlayFieldContainer
+            cards={cardMocks}
+            score={0}
+            checkingCardIndex={-1}
+            initialTimerInProgress={false}
+            checkTimerInProgress={false}
+            onStartNewGame={() => {}}
+            onChangeScore={(score) => {scoreAfterChange += score}}
+        /> );
+
+    playField.instance().addScore();
+    expect(scoreAfterChange).toEqual(42*3);
+    playField.instance().reduceScore();
+    expect(scoreAfterChange).toEqual(42*3 - 3*42);
+});

@@ -23,7 +23,10 @@
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "jest": "^22.0.6",
     "jest-cli": "^22.0.6",
+    "jsdom": "11.5.1",
+    "jsdom-global": "3.0.2",
     "prop-types": "^15.6.0",
     "react-test-renderer": "^16.2.0"
   }

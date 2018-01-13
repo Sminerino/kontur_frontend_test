@@ -13,7 +13,10 @@ const PlayField = (props) =>
                 </div>
                 <div className="play-field__score">
                     Score:
-                    <div data-tid='Menu-scores'>
+                    <div
+                        className='play-field__score-number'
+                        data-tid='Menu-scores'
+                    >
                         {props.score}
                     </div>
                 </div>
