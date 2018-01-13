@@ -14,13 +14,11 @@ class App extends Component {
   render() {
     return (
         <BrowserRouter>
-            <div>
-                <Switch>
-                    <Route exact path='/' component={ StartPage } />
-                    <Route path='/game' component={() => <PlayFieldContainer size={9}/>} />
-                    <Route component={Nothing} />
-                </Switch>
-            </div>
+            <Switch>
+                <Route exact path='/' component={ StartPage } />
+                <Route path='/game' component={() => <PlayFieldContainer size={9}/>} />
+                <Route component={Nothing} />
+            </Switch>
         </BrowserRouter>
     );
   }

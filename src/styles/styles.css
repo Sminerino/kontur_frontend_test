@@ -2,26 +2,26 @@ body {
     font-family: "Noto Sans CJK JP Bold";
     color: beige;
     background-color: #478242;
-    min-height: 100%;
     padding: 0;
     margin: 0;
 }
 
-.play-field-container {
+#root {
     display: flex;
     flex-flow: column;
     align-items: center;
 }
 
-.play-field {
-    display: flex;
-    flex-flow: column;
+.play-field-container {
     padding-top: 50px;
+    width: 100%;
+    max-width: 1010px;
 }
 
 .play-field__header {
+    padding: 0 15px;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
     grid-gap: 20px;
 }
 
@@ -32,11 +32,11 @@ body {
 }
 
 .play-field__restart-button-container {
-    width: 50%;
-    grid-column: 1 / 2;
+    grid-column: 1/1;
 }
 
 .restart-button {
+    width: 140px;
     color: #478242;
     display: flex;
     justify-content: center;
@@ -51,12 +51,16 @@ body {
     background-color: #b5b5a2;
 }
 
-.play-field__cards-container {
+.play-field__cards-grid-container {
+    padding: 0 15px;
     margin-top: 20px;
+}
+
+.play-field__cards-container {
     display: grid;
-    grid-template: repeat(3, 200px) / repeat(6, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+    grid-template-rows: repeat(auto-fit, 1fr);
     grid-gap: 20px;
-    align-self: stretch;
 }
 
 .card {
