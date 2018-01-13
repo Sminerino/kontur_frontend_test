@@ -170,6 +170,7 @@ export const getNewSetOfCards = (size) => {
     return cards;
 };
 
+
 export const mapStateToProps = (state, ownProps) => {
     return {
         cards: state.cards.toJS() || [],

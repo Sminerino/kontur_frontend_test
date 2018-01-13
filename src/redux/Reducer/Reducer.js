@@ -79,7 +79,9 @@ function scoreReducer(state = 0, action) {
 function checkingCardIndexReducer(state = -1, action) {
     switch(action.type) {
         case ActionTypes.CHANGE_CHECKING_CARD:
-            return action.cardIndex || -1;
+            if(action.cardIndex >= 0)
+                return action.cardIndex;
+            return state;
         case ActionTypes.START_NEW_GAME:
             return -1;
         case ActionTypes.CONFIRM_PAIR:

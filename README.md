@@ -10,6 +10,9 @@ https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/
     npm i || yarn install
 ###### Running:
     npm run start || yarn start
+###### Testing:
+    npm run test || yarn test
+
 
 ###### Libraries/instruments used to build the app:
 1. React
@@ -37,6 +40,11 @@ same with an unsuccessful guess.
 ###### Notes:
 1. time for which wrongly guessed cards are shown: 2000ms
 2. initial time for card remembering: 5000ms
+3. tests mostly check components and business logic, not much of redux is tested
+4. score changing algorithm was also tested manually through adding a mock of random card generation
+and shuffling function; and then checking if the algorithm works as intended;
+5. the biggest amount of points one can get is 1890 (42*9 + 42*8 + ... +42*1)
+6. there can be negative total score
 
 ###### Todo:
 1. ~~cards should be open for the first 5 seconds.~~
@@ -44,6 +52,6 @@ same with an unsuccessful guess.
 3. ~~start screen~~
 4. ~~end screen~~
 5. ~~restart button~~
-6. testing
+6. ~~testing~~
 7. ~~icon and title~~
 8. ~~add enzyme~~
