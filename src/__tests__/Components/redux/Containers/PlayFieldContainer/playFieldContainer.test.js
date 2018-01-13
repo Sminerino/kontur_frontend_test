@@ -170,3 +170,35 @@ test('PlayFieldContainer should correctly calculate' +
     playField.instance().reduceScore();
     expect(scoreAfterChange).toEqual(42*3 - 3*42);
 });
+
+test('PlayFieldContainer should not add or deduct score if given an empty array', () => {
+    let scoreAfterChange = 0;
+    let playField = shallow(
+        <PlayFieldContainer
+            cards={[]}
+            score={0}
+            checkingCardIndex={-1}
+            initialTimerInProgress={false}
+            checkTimerInProgress={false}
+            onStartNewGame={() => {}}
+            onChangeScore={(score) => {scoreAfterChange += score}}
+        /> );
+
+    playField.instance().addScore();
+    expect(scoreAfterChange).toEqual(0);
+    playField.instance().reduceScore();
+    expect(scoreAfterChange).toEqual(0);
+});
+
+test('PlayFieldContainer should not add or deduct score (or crash) if not given any props', () => {
+    let scoreAfterChange = 0;
+    let playField = shallow(
+        <PlayFieldContainer
+            onChangeScore={(score) => {scoreAfterChange += score}}
+        /> );
+
+    playField.instance().addScore();
+    expect(scoreAfterChange).toEqual(0);
+    playField.instance().reduceScore();
+    expect(scoreAfterChange).toEqual(0);
+});

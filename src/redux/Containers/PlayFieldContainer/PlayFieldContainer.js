@@ -116,6 +116,8 @@ export class PlayFieldContainer extends React.Component {
 
 
     addScore() {
+        this.props.onChangeScore &&
+        this.props.cards &&
         this.props.onChangeScore(
             (this.props.cards.length / 2 -
                 Math.floor(this.getConfirmedCardsCount() / 2)) * 42
@@ -123,6 +125,8 @@ export class PlayFieldContainer extends React.Component {
     }
 
     reduceScore() {
+        this.props.onChangeScore &&
+        this.props.cards &&
         this.props.onChangeScore(
             (-Math.floor(this.getConfirmedCardsCount() / 2) * 42)
         );
