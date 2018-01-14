@@ -14,13 +14,15 @@ https://docs.google.com/document/d/1mGdzJfIA9TTFPbMs8etZjPWQ_VSlIV7RWc4kcJXXTQI/
     npm run test || yarn test
 
 
-###### Libraries/instruments used to build the app:
+###### Libraries/instruments used to build/test the app:
 1. React
 2. create-react-app
 3. Redux
 4. react-redux
 5. Immutable.js
 6. react-router
+7. jest
+8. enzyme
 
 ###### Score algorithm:
 Score to add/subtract is calculated for the state before the cards flip.
@@ -45,6 +47,7 @@ same with an unsuccessful guess.
 and shuffling function; and then checking if the algorithm works as intended;
 5. the biggest amount of points one can get is 1890 (42 \* 9 + 42 \* 8 + ... +42 \* 1)
 6. there can be negative total score
+7. app is not supported by IE (all cards are rendered in a single column, because IE doesn't support some (most) of grid properties)
 
 ###### Todo:
 1. ~~cards should be open for the first 5 seconds.~~
